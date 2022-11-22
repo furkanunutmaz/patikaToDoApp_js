@@ -1,48 +1,40 @@
-/*
 
-1. Adım
-    -> buton aktifleştirilecek -> Tamamlandı
-    -> DOM işlemi uygulanacak
-    -> localstorage'da veri tutucak
+var tasks = []
+const get_list = document.querySelector('#list')
+var my_list = document.getElementsByTagName("LI")
 
-2. Adım 
-    -> Listeye boş karakter eklenemeyecek -> Tamamlandı
-    -> Tamamlandı işareti koyulabilecek
-    -> çarpıyla silme işlemi koyulabilecek
-    -> Toast(bootstrap) ile hata verecek
-    -> bootstrap tasarımı eklencek
+// Aşağıda listedeki datalar localstorage'a eklendi.
+// her satır sonuna X işareti eklendi. Hardcode'daki değerler için yapıldı.
+for (var i=0; i < my_list.length; i++ ) {
+    
+    // localstorage
+    tasks.push(my_list[i].innerHTML)
+    console.log(tasks)
+    localStorage.setItem("list",JSON.stringify(tasks))
 
-*/
+    // satır sonuna close butonu
+    var span = document.createElement("SPAN")
+    var dlt = document.createTextNode("\u00D7")
 
+    span.className = "close"
+    span.id = "delete"
+    span.appendChild(dlt)
+    my_list[i].appendChild(span);
+    my_list[i].classList.add("check")
 
-/*
-
-// LOOP'a data ekleme aşağıdaki gibi olacak 
-
-let item = [""]
-
-const add_item = document.querySelector('list')
-
-for (index = 0; index < item.length; index++){
-    const liDom = document.createElement('li')
-    liDom.innerHTML = item[index]
-    add_item.appendChild('liDom')
 }
 
-*/
+
 
 
 // Buton, text ve liste tanımlandı ardında text alanından girilen değer buton yardımıyla listeye eklendi.
 // Daha düzgün yapılacak
 
-
+/*
 let task = document.getElementById('task')
 let get_task = document.getElementById('list')
 let add_button = document.getElementById('liveToastBtn')
-let delete_button = document.getElementById('iconForDelete')
-
 add_button.addEventListener('click', add_task)
-get_task.addEventListener('click', delete_task)
 
 function add_task (){
 
@@ -71,20 +63,4 @@ function add_task (){
     }
 
 }
-
-// DELETE FUNCTION
-/*
-
-            // Declaring a variable to get select element
-            var a = document.getElementById("list");
-            var candidate = document.getElementById("candidate");
-            var item = document.getElementById(candidate.value);
-            a.removeChild(item);
 */
-
-function delete_task(){
-
-    let delete_item = document.getElementById(delete_button.value)
-    delete_button.removeChild(delete_item)
-}
-

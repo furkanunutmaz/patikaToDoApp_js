@@ -1,4 +1,3 @@
-
 var tasks = []
 const get_list = document.querySelector('#list')
 var my_list = document.getElementsByTagName("LI")
@@ -24,7 +23,54 @@ for (var i=0; i < my_list.length; i++ ) {
 
 }
 
+function newElement(){
 
+    var li = document.createElement("li")
+    var input = document.getElementById("task").value
+    var text = document.createTextNode(input.trim())
+   
+    li.appendChild(text)
+    li.classList.add("check")
+    document.getElementById("list").appendChild(li)
+    document.getElementById("task").value = ""
+
+    var span = document.createElement("SPAN")
+    var dlt = document.createTextNode("\u00D7")
+
+    span.className = "close"
+    span.id = "delete"
+    span.appendChild(dlt)
+    li.appendChild(span)
+    document.querySelector("#olm").innerHTML = "Listeye eklendi."
+    $(".success").toast("show");
+    tasks.push(input)
+    localStorage.setItem("list",JSON.stringify(tasks))
+    
+}
+
+get_list.addEventListener("click", deleteItem)
+
+function deleteItem (e){
+    const item = e.target
+
+    // Aşapıdaki kod bloğunda eğer close class'ına basılırsa maddeyi silsin ve toastta göstersin
+    if(item.classList[0] === "close") {
+        document.querySelector("#olm").innerHTML = "Madde Silindi" 
+        $(".success").toast("show")
+
+        const dlt_item = item.parentElement
+        tasks.pop()
+        dlt_item.remove() // Seçilen itemi siliyor
+        localStorage.clear() // local tabledan bütün kayıtları uçuruyor. düzeltilmeli
+    }
+
+    // Eğer satırda çarpı butonu dışındaki yere basılırsa satırın üstünü çizecek ve başına tik işareti koyacak
+    if(item.classList[0]==="check"){
+        document.querySelector("#olm").innerHTML = "Checked"
+        $(".success").toast("show");
+        item.classList.toggle('checked');
+    }
+}
 
 
 // Buton, text ve liste tanımlandı ardında text alanından girilen değer buton yardımıyla listeye eklendi.

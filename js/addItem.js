@@ -1,19 +1,14 @@
 // List
 let todoItems = [];
 
-// X button on the list rows 
-const span = document.createElement("SPAN")
-const dlt = document.createTextNode("\u00D7")
-span.className = "close"
-span.id = "delete"
+
 
 
 // DOM
 const list = document.querySelector('#list');
 
-
 // Create list with DOM and add delete button. The task shows to user 
-function renderTodo(todo) {
+function renderTodo(todo) {    
   const isChecked = todo.checked ? 'done': '';
   const node = document.createElement("li");
   node.setAttribute('class', `todo-item ${isChecked}`);
@@ -23,7 +18,14 @@ function renderTodo(todo) {
     <span>${todo.text}</span>
   `
 
+  const item = document.querySelector(`[data-key='${todo.id}']`)
+
   // Add X button on the row
+  // X button on the list rows 
+  const span = document.createElement("SPAN")
+  const dlt = document.createTextNode("\u00D7")
+  span.className = "close"
+  span.id = "delete"
   span.appendChild(dlt)
   node.appendChild(span)
 
@@ -31,10 +33,9 @@ function renderTodo(todo) {
   document.querySelector("#olm").innerHTML = "The item is added to the list"
   $(".success").toast("show");
 
-
   list.append(node);
+  
 }
-
 
 // Entered task add the to the list when press the submit button
 function newElement(e){
@@ -62,4 +63,5 @@ function addTodo(text) {
 
   todoItems.push(todo);
   renderTodo(todo);
+  localStorage.setItem("list",JSON.stringify(todoItems))
 }

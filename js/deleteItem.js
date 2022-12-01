@@ -1,7 +1,7 @@
 const get_list = document.querySelector('#list')
-get_list.addEventListener("click", deleteItem)
+get_list.addEventListener("click", deleteandUpdateItem)
 
-function deleteItem (e){
+function deleteandUpdateItem (e){
     const item = e.target
 
     var aaaa = item.classList

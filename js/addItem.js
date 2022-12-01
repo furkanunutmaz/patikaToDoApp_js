@@ -1,16 +1,31 @@
 // List
 let todoItems = [];
 
+var my_list = document.getElementsByTagName("LI")
 
+for (var i=0; i < my_list.length; i++ ) {
+    
+    // satır sonuna close butonu
+    var span = document.createElement("SPAN")
+    var dlt = document.createTextNode("\u00D7")
 
+    span.className = "close"
+    span.id = "delete"
+    span.appendChild(dlt)
+    my_list[i].appendChild(span);
+    my_list[i].classList.add("check")
+
+}
 
 // DOM
 const list = document.querySelector('#list');
+
 
 // Create list with DOM and add delete button. The task shows to user 
 function renderTodo(todo) {    
   const isChecked = todo.checked ? 'done': '';
   const node = document.createElement("li");
+
   node.setAttribute('class', `todo-item ${isChecked}`);
   node.setAttribute('data-key', todo.id);
   node.innerHTML = `
@@ -19,6 +34,7 @@ function renderTodo(todo) {
   `
 
   const item = document.querySelector(`[data-key='${todo.id}']`)
+    
 
   // Add X button on the row
   // X button on the list rows 
@@ -29,11 +45,21 @@ function renderTodo(todo) {
   span.appendChild(dlt)
   node.appendChild(span)
 
+  //node.classList.add("check")
+
   // Success Message
   document.querySelector("#olm").innerHTML = "The item is added to the list"
   $(".success").toast("show");
 
-  list.append(node);
+      // If the item already exists in the DOM
+  if (item) {
+    // replace it
+    list.replaceChild(node, item);
+  } else {
+    // otherwise append it to the end of the list
+    list.append(node);
+  }
+
   
 }
 
@@ -43,7 +69,10 @@ function newElement(e){
   
       var input = document.getElementById("task").value
       var text = input.trim()
-  
+
+    // Add Check process
+
+
       if(text !== '' ) {
           addTodo(text)
           input.value = ''
@@ -54,14 +83,14 @@ function newElement(e){
 
 // Text add inside the object that has id,checked status and text 
 function addTodo(text) {
-    // Added item
+  var node = document.createElement("li");
   const todo = {
     text,
     checked: false,
     id: Date.now(),
   };
 
-  todoItems.push(todo);
+  todoItems.push(todo); 
   renderTodo(todo);
   localStorage.setItem("list",JSON.stringify(todoItems))
 }

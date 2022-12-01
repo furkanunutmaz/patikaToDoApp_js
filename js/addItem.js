@@ -13,7 +13,7 @@ for (var i=0; i < my_list.length; i++ ) {
     span.id = "delete"
     span.appendChild(dlt)
     my_list[i].appendChild(span);
-    my_list[i].classList.add("check")
+    //my_list[i].classList.add("check")
 
 }
 
@@ -25,16 +25,15 @@ const list = document.querySelector('#list');
 function renderTodo(todo) {    
   const isChecked = todo.checked ? 'done': '';
   const node = document.createElement("li");
+  const item = document.querySelector(`[data-key='${todo.id}']`);
 
-  node.setAttribute('class', `todo-item ${isChecked}`);
+
+  node.setAttribute('class', `check ${isChecked}`);
   node.setAttribute('data-key', todo.id);
   node.innerHTML = `
     <label for="${todo.id}" class="tick js-tick"></label>
     <span>${todo.text}</span>
   `
-
-  const item = document.querySelector(`[data-key='${todo.id}']`)
-    
 
   // Add X button on the row
   // X button on the list rows 
@@ -45,7 +44,6 @@ function renderTodo(todo) {
   span.appendChild(dlt)
   node.appendChild(span)
 
-  //node.classList.add("check")
 
   // Success Message
   document.querySelector("#olm").innerHTML = "The item is added to the list"
@@ -83,7 +81,7 @@ function newElement(e){
 
 // Text add inside the object that has id,checked status and text 
 function addTodo(text) {
-  var node = document.createElement("li");
+
   const todo = {
     text,
     checked: false,
@@ -94,3 +92,6 @@ function addTodo(text) {
   renderTodo(todo);
   localStorage.setItem("list",JSON.stringify(todoItems))
 }
+
+
+
